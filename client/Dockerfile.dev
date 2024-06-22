@@ -1,6 +1,13 @@
 FROM node:alpine
+
 WORKDIR "/app"
-COPY ./package.json ./
-RUN npm install
+
+COPY package.json package-lock.json* ./
+
+RUN npm install --legacy-peer-deps
+
 COPY . .
-CMD ["npm", "run", "start"]
+
+ENV NODE_OPTIONS=--openssl-legacy-provider
+
+CMD ["npm", "start"]
